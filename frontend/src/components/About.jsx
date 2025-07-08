@@ -1,0 +1,174 @@
+const About = () => {
+  return (
+    <section id="about" className="section-padding bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4">
+            👨‍💻 Get to know me
+          </div>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            About <span className="gradient-text">Me</span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Passionate full-stack developer with 3+ years of experience building scalable web applications
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Profile Image Section */}
+          <div className="animate-slide-up px-4 lg:px-0">
+            <div className="relative max-w-md mx-auto">
+              {/* Background decorative elements */}
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-blue-200 rounded-3xl transform rotate-3 opacity-60"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-3xl transform -rotate-2 opacity-40"></div>
+              
+              {/* Main profile container */}
+              <div className="relative bg-white p-2 rounded-3xl shadow-2xl">
+                <div className="relative overflow-hidden rounded-2xl">
+                  {/* Profile Image */}
+                  <img 
+                    src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600" 
+                    alt="Alex - Full Stack Developer"
+                    className="w-full h-80 sm:h-96 object-cover object-center"
+                  />
+                  
+                  {/* Overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                  
+                  {/* Status badge */}
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-white/90 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="text-xs font-medium text-gray-700">Available</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Bottom info card */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg">
+                      <h3 className="font-bold text-gray-900 text-lg">Alex Johnson</h3>
+                      <p className="text-purple-600 font-medium text-sm">Full-Stack Developer</p>
+                      <div className="flex items-center space-x-4 mt-2">
+                        <div className="flex items-center space-x-1">
+                          <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                          </svg>
+                          <span className="text-xs text-gray-600">San Francisco</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                          <span className="text-xs text-gray-600">4.9 Rating</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Floating elements */}
+              <div className="absolute -top-4 -left-4 bg-white p-3 rounded-full shadow-lg animate-bounce-slow">
+                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              </div>
+              
+              <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-full shadow-lg animate-float">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          {/* Content Section */}
+          <div className="animate-slide-up px-4 lg:px-0">
+            <div className="space-y-8">
+              <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                  <span className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mr-3">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </span>
+                  My Journey
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  I started my journey in web development 3 years ago, and since then I've been 
+                  constantly learning and growing. I love turning complex problems into simple, 
+                  beautiful, and intuitive solutions.
+                </p>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  When I'm not coding, you can find me exploring new technologies, contributing to 
+                  open-source projects, or sharing my knowledge through technical writing and mentoring.
+                </p>
+                
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-green-700 font-medium">Currently learning AI/ML</span>
+                  </div>
+                  <div className="flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-full">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <span className="text-sm text-blue-700 font-medium">Open to collaborations</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Skills Cards */}
+              <div className="space-y-4">
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-gradient-to-r from-purple-100 to-blue-100 p-3 rounded-xl">
+                      <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-900 mb-2">Frontend Development</h4>
+                      <p className="text-gray-600 text-sm">Creating responsive and interactive user interfaces using React, Vue, and modern CSS frameworks.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-gradient-to-r from-green-100 to-emerald-100 p-3 rounded-xl">
+                      <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-900 mb-2">Backend Development</h4>
+                      <p className="text-gray-600 text-sm">Building robust APIs and server-side applications using Node.js, Python, and various databases.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-gradient-to-r from-blue-100 to-indigo-100 p-3 rounded-xl">
+                      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-900 mb-2">Cloud & DevOps</h4>
+                      <p className="text-gray-600 text-sm">Deploying and managing applications on cloud platforms with CI/CD pipelines and containerization.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default About;
