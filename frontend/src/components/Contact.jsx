@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -16,20 +19,27 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:5000/api/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      // Tambahkan delay agar loading terasa lebih lama
+      await new Promise((resolve) => setTimeout(resolve, 1200));
       if (response.ok) {
-        setFormData({ name: "", email: "", message: "" });
-        alert("Thank you for your message! I will get back to you soon.");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        toast.success(
+          "Thank you for your message! I will get back to you soon."
+        );
       } else {
-        alert("Failed to send message. Please try again.");
+        toast.error("Failed to send message. Please try again.");
       }
     } catch (error) {
-      alert("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -221,6 +231,25 @@ const Contact = () => {
 
               <div className="mb-6">
                 <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  WhatsApp
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="08xxxxxxxxxx"
+                />
+              </div>
+
+              <div className="mb-6">
+                <label
                   htmlFor="message"
                   className="block text-sm font-medium text-gray-700 mb-2"
                 >
@@ -238,8 +267,38 @@ const Contact = () => {
                 ></textarea>
               </div>
 
-              <button type="submit" className="w-full btn-primary">
-                Send Message
+              <button
+                type="submit"
+                className="w-full btn-primary flex items-center justify-center"
+                disabled={loading}
+              >
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      ></path>
+                    </svg>
+                    Sending...
+                  </span>
+                ) : (
+                  "Send Message"
+                )}
               </button>
             </form>
           </div>
