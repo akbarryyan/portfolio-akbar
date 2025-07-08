@@ -7,3 +7,10 @@ export async function createMessage({ name, email, phone, message }) {
   );
   return result;
 }
+
+export async function getAllMessages() {
+  const [rows] = await pool.execute(
+    "SELECT * FROM messages ORDER BY createdAt DESC"
+  );
+  return rows;
+}
