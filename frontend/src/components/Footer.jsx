@@ -5,11 +5,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <h3 className="text-2xl font-bold mb-4 gradient-text">
-              DevPortfolio
+              akbarryyan
             </h3>
             <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
-              Full-stack developer passionate about creating innovative web
-              solutions. Let's build something amazing together.
+              Full-stack developer passionate about creating innovative web,
+              applications and modern design principles, I strive to deliver
+              high-quality, user-centric digital experiences. Let's collaborate
+              to bring your ideas to life! solutions. Let's build something
+              amazing together.
             </p>
             <div className="flex space-x-4">
               <a

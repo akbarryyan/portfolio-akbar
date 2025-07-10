@@ -52,7 +52,7 @@ const About = () => {
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg">
                       <h3 className="font-bold text-gray-900 text-lg">
-                        Alex Johnson
+                        Akbar Rayyan Al Ghifari
                       </h3>
                       <p className="text-purple-600 font-medium text-sm">
                         Full-Stack Developer
@@ -68,19 +68,7 @@ const About = () => {
                             <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
                           <span className="text-xs text-gray-600">
-                            San Francisco
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <svg
-                            className="w-4 h-4 text-blue-500"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                          </svg>
-                          <span className="text-xs text-gray-600">
-                            4.9 Rating
+                            Indonesia
                           </span>
                         </div>
                       </div>
@@ -147,15 +135,20 @@ const About = () => {
                   My Journey
                 </h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  I started my journey in web development 3 years ago, and since
-                  then I've been constantly learning and growing. I love turning
-                  complex problems into simple, beautiful, and intuitive
-                  solutions.
+                  I started my journey in web development three years ago, and
+                  since then I’ve been continuously learning and growing. I love
+                  turning complex problems into simple, beautiful, and intuitive
+                  solutions that make an impact.
                 </p>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  When I'm not coding, you can find me exploring new
+                  More recently, I’ve also been expanding my skills into mobile
+                  development, building modern apps that run smoothly across
+                  devices. When I’m not coding, you’ll find me exploring new
                   technologies, contributing to open-source projects, or sharing
-                  my knowledge through technical writing and mentoring.
+                  my knowledge through technical writing and mentoring. I
+                  believe in creating products that combine functionality and
+                  aesthetics — powered by clean code and endless cups of coffee
+                  ☕.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
@@ -228,7 +221,7 @@ const About = () => {
                       </h4>
                       <p className="text-gray-600 text-sm">
                         Building robust APIs and server-side applications using
-                        Node.js, Python, and various databases.
+                        PHP, Laravel, Node.js, Python, and various databases.
                       </p>
                     </div>
                   </div>

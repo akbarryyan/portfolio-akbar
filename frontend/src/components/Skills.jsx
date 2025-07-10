@@ -6,13 +6,14 @@ const Skills = () => {
       skills: [
         "React.js",
         "JavaScript (ES6+)",
-        "TypeScript",
         "Vue.js",
         "HTML5 & CSS3",
         "Tailwind CSS",
         "Sass/SCSS",
-        "Bootstrap"
-      ]
+        "Bootstrap",
+        "Responsive Design",
+        "Flutter & Dart",
+      ],
     },
     {
       title: "Backend Development",
@@ -20,14 +21,13 @@ const Skills = () => {
       skills: [
         "Node.js",
         "Express.js",
+        "PHP",
+        "Laravel",
         "Python",
-        "Django",
-        "MongoDB",
-        "PostgreSQL",
+        "Flask",
         "MySQL",
         "REST APIs",
-        "GraphQL"
-      ]
+      ],
     },
     {
       title: "Tools & Technologies",
@@ -35,15 +35,16 @@ const Skills = () => {
       skills: [
         "Git & GitHub",
         "Docker",
-        "AWS",
         "Firebase",
         "Vercel",
-        "Netlify",
+        "Trello",
         "Figma",
         "Postman",
-        "VS Code"
-      ]
-    }
+        "VS Code",
+        "Xampp",
+        "Cursor",
+      ],
+    },
   ];
 
   return (
@@ -57,34 +58,40 @@ const Skills = () => {
             Skills & <span className="gradient-text">Technologies</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Here are the technologies and tools I use to bring creative ideas to life
+            Here are the technologies and tools I use to bring creative ideas to
+            life
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => (
-            <div key={index} className="card p-8 animate-slide-up hover:transform hover:scale-105 transition-all duration-300">
+            <div
+              key={index}
+              className="card p-8 animate-slide-up hover:transform hover:scale-105 transition-all duration-300"
+            >
               <div className="text-center mb-6">
                 <div className="text-4xl mb-3">{category.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900">
                   {category.title}
                 </h3>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-3">
                 {category.skills.map((skill, skillIndex) => (
-                  <div 
+                  <div
                     key={skillIndex}
                     className="bg-gradient-to-r from-purple-50 to-blue-50 px-3 py-2 rounded-lg text-center hover:from-purple-100 hover:to-blue-100 transition-all duration-200 cursor-default"
                   >
-                    <span className="text-gray-700 text-sm font-medium">{skill}</span>
+                    <span className="text-gray-700 text-sm font-medium">
+                      {skill}
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
           ))}
         </div>
-        
+
         <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-purple-50 to-blue-50 px-4 sm:px-8 py-6 rounded-2xl mx-4 sm:mx-0">
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-0 sm:space-x-8">
@@ -92,18 +99,18 @@ const Skills = () => {
                 <div className="text-3xl font-bold gradient-text">50+</div>
                 <div className="text-gray-600 text-sm">Projects Completed</div>
               </div>
-              
+
               <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
               <div className="block sm:hidden w-12 h-px bg-gray-300"></div>
-              
+
               <div className="text-center">
                 <div className="text-3xl font-bold gradient-text">3+</div>
                 <div className="text-gray-600 text-sm">Years Experience</div>
               </div>
-              
+
               <div className="hidden sm:block w-px h-12 bg-gray-300"></div>
               <div className="block sm:hidden w-12 h-px bg-gray-300"></div>
-              
+
               <div className="text-center">
                 <div className="text-3xl font-bold gradient-text">100%</div>
                 <div className="text-gray-600 text-sm">Client Satisfaction</div>
