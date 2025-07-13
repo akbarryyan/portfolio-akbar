@@ -135,27 +135,29 @@ const About = () => {
                   My Journey
                 </h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  I started my journey in web development three years ago, and
-                  since then I’ve been continuously learning and growing. I love
-                  turning complex problems into simple, beautiful, and intuitive
-                  solutions that make an impact.
+                  My journey in web development began three years ago, and from
+                  that first “Hello World” I knew I was hooked. Since then, I’ve
+                  dedicated myself to turning complex challenges into simple,
+                  elegant, and intuitive experiences.
                 </p>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  More recently, I’ve also been expanding my skills into mobile
-                  development, building modern apps that run smoothly across
-                  devices. When I’m not coding, you’ll find me exploring new
-                  technologies, contributing to open-source projects, or sharing
-                  my knowledge through technical writing and mentoring. I
-                  believe in creating products that combine functionality and
-                  aesthetics — powered by clean code and endless cups of coffee
-                  ☕.
+                  Lately, I’ve been venturing into mobile development too,
+                  bringing ideas to life on screens big and small. Outside of
+                  coding, you’ll find me trying out new stacks, contributing to
+                  open-source communities, or helping others grow through
+                  writing and mentoring.
+                </p>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Great products are born when clean code meets thoughtful
+                  design — and a good cup of coffee ☕. “One day or day one.”
+                  For me, every day is day one.
                 </p>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-3">
                   <div className="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                     <span className="text-sm text-green-700 font-medium">
-                      Currently learning AI/ML
+                      Currently exploring Data Science and AI/ML.
                     </span>
                   </div>
                   <div className="flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-full">
