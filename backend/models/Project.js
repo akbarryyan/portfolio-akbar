@@ -20,9 +20,9 @@ GROUP BY p.id`
 export const getProjectById = async (id) => {
   const [rows] = await pool.query(
     `SELECT p.*, 
-            GROUP_CONCAT(t.name) AS technologies,
+            GROUP_CONCAT(DISTINCT t.name) AS technologies,
             (
-              SELECT JSON_ARRAYAGG(image_path)
+              SELECT GROUP_CONCAT(image_path)
               FROM project_images
               WHERE project_id = p.id
             ) AS images
@@ -74,7 +74,8 @@ export const updateProject = async (id, projectData) => {
     overview_image,
   } = projectData;
 
-  let query = "UPDATE projects SET title = ?, description = ?, github_link = ?, live_link = ?, featured = ?";
+  let query =
+    "UPDATE projects SET title = ?, description = ?, github_link = ?, live_link = ?, featured = ?";
   const params = [title, description, github_link, live_link, featured];
 
   if (overview_image) {
