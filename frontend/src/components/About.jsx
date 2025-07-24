@@ -70,7 +70,7 @@ const About = () => {
                             <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
                           <span className="text-xs text-gray-600">
-                            Indonesia
+                            Indonesia, West Java
                           </span>
                         </div>
                       </div>
@@ -273,7 +273,7 @@ const About = () => {
                       <p className="text-gray-600 text-sm">
                         Developing cross-platform mobile applications using
                         React Native and Flutter for seamless user experiences
-                        on iOS and Android.
+                        on Android.
                       </p>
                     </div>
                   </div>
