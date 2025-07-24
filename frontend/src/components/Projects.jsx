@@ -6,6 +6,7 @@ const Projects = () => {
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [pauseAutoSlide, setPauseAutoSlide] = useState({});
+  const [isTransitioning, setIsTransitioning] = useState({});
 
   useEffect(() => {
     fetchProjects();
@@ -110,6 +111,11 @@ const Projects = () => {
   };
 
   const handlePrevImage = (projectId) => {
+    // Prevent rapid clicking during transition
+    if (isTransitioning[projectId]) return;
+
+    setIsTransitioning((prev) => ({ ...prev, [projectId]: true }));
+
     setCurrentImageIndex((prev) => {
       const project = projects.find((p) => p.id === projectId);
       if (!project || !project.allImages || project.allImages.length <= 1)
@@ -124,9 +130,19 @@ const Projects = () => {
         [projectId]: newIndex,
       };
     });
+
+    // Reset transition state after animation completes
+    setTimeout(() => {
+      setIsTransitioning((prev) => ({ ...prev, [projectId]: false }));
+    }, 300);
   };
 
   const handleNextImage = (projectId) => {
+    // Prevent rapid clicking during transition
+    if (isTransitioning[projectId]) return;
+
+    setIsTransitioning((prev) => ({ ...prev, [projectId]: true }));
+
     setCurrentImageIndex((prev) => {
       const project = projects.find((p) => p.id === projectId);
       if (!project || !project.allImages || project.allImages.length <= 1)
@@ -140,6 +156,28 @@ const Projects = () => {
         [projectId]: newIndex,
       };
     });
+
+    // Reset transition state after animation completes
+    setTimeout(() => {
+      setIsTransitioning((prev) => ({ ...prev, [projectId]: false }));
+    }, 300);
+  };
+
+  const handleIndicatorClick = (projectId, imageIndex) => {
+    // Prevent clicking during transition
+    if (isTransitioning[projectId]) return;
+
+    setIsTransitioning((prev) => ({ ...prev, [projectId]: true }));
+
+    setCurrentImageIndex((prev) => ({
+      ...prev,
+      [projectId]: imageIndex,
+    }));
+
+    // Reset transition state after animation completes
+    setTimeout(() => {
+      setIsTransitioning((prev) => ({ ...prev, [projectId]: false }));
+    }, 300);
   };
 
   if (loading) {
@@ -212,24 +250,36 @@ const Projects = () => {
               >
                 {project.allImages && project.allImages.length > 0 ? (
                   <>
-                    <img
-                      src={`http://localhost:5000/uploads/${
-                        project.allImages[currentImageIndex[project.id] || 0]
-                          ?.path
-                      }`}
-                      alt={project.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
+                    {/* Image container with smooth transition */}
+                    <div className="relative w-full h-48 overflow-hidden">
+                      {project.allImages.map((image, imageIndex) => (
+                        <img
+                          key={imageIndex}
+                          src={`http://localhost:5000/uploads/${image.path}`}
+                          alt={`${project.title} - Image ${imageIndex + 1}`}
+                          className={`absolute inset-0 w-full h-48 object-cover transition-all duration-500 ease-in-out transform group-hover:scale-110 ${
+                            imageIndex === (currentImageIndex[project.id] || 0)
+                              ? "opacity-100 translate-x-0"
+                              : imageIndex <
+                                (currentImageIndex[project.id] || 0)
+                              ? "opacity-0 -translate-x-full"
+                              : "opacity-0 translate-x-full"
+                          }`}
+                        />
+                      ))}
+                    </div>
 
                     {/* Navigation arrows */}
                     {project.allImages.length > 1 && (
                       <>
                         <button
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
                             handlePrevImage(project.id);
                           }}
-                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 hover:bg-black/70"
+                          disabled={isTransitioning[project.id]}
+                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 hover:bg-black/70 hover:scale-110 disabled:opacity-50 z-10"
                         >
                           <svg
                             className="w-4 h-4"
@@ -247,10 +297,12 @@ const Projects = () => {
                         </button>
                         <button
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
                             handleNextImage(project.id);
                           }}
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 hover:bg-black/70"
+                          disabled={isTransitioning[project.id]}
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 hover:bg-black/70 hover:scale-110 disabled:opacity-50 z-10"
                         >
                           <svg
                             className="w-4 h-4"
@@ -271,22 +323,21 @@ const Projects = () => {
 
                     {/* Image indicators */}
                     {project.allImages.length > 1 && (
-                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
                         {project.allImages.map((_, imageIndex) => (
                           <button
                             key={imageIndex}
                             onClick={(e) => {
+                              e.preventDefault();
                               e.stopPropagation();
-                              setCurrentImageIndex((prev) => ({
-                                ...prev,
-                                [project.id]: imageIndex,
-                              }));
+                              handleIndicatorClick(project.id, imageIndex);
                             }}
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            disabled={isTransitioning[project.id]}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 hover:scale-125 disabled:opacity-50 ${
                               imageIndex ===
                               (currentImageIndex[project.id] || 0)
-                                ? "bg-white"
-                                : "bg-white/50"
+                                ? "bg-white scale-110"
+                                : "bg-white/50 hover:bg-white/75"
                             }`}
                           />
                         ))}
@@ -295,7 +346,7 @@ const Projects = () => {
 
                     {/* Image counter */}
                     {project.allImages.length > 1 && (
-                      <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
+                      <div className="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-md text-xs font-medium z-10">
                         {(currentImageIndex[project.id] || 0) + 1}/
                         {project.allImages.length}
                       </div>
