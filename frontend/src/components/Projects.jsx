@@ -4,10 +4,36 @@ const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState({});
+  const [pauseAutoSlide, setPauseAutoSlide] = useState({});
 
   useEffect(() => {
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    // Auto-slide images every 3 seconds
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => {
+        const newIndex = { ...prev };
+        projects.forEach((project) => {
+          // Only auto-slide if not paused for this project
+          if (
+            project.allImages &&
+            project.allImages.length > 1 &&
+            !pauseAutoSlide[project.id]
+          ) {
+            const currentIndex = newIndex[project.id] || 0;
+            newIndex[project.id] =
+              (currentIndex + 1) % project.allImages.length;
+          }
+        });
+        return newIndex;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [projects, pauseAutoSlide]);
 
   const fetchProjects = async () => {
     try {
@@ -16,7 +42,62 @@ const Projects = () => {
       const data = await response.json();
 
       if (data.success) {
-        setProjects(data.data);
+        // Process projects to combine overview_image with project_images
+        const processedProjects = data.data.map((project) => {
+          const allImages = [];
+
+          // Add overview_image first if exists
+          if (project.overview_image) {
+            allImages.push({
+              path: project.overview_image,
+              isOverview: true,
+            });
+          }
+
+          // Add project_images if exists
+          if (project.images) {
+            try {
+              const projectImages = JSON.parse(project.images);
+              if (Array.isArray(projectImages)) {
+                projectImages.forEach((imagePath) => {
+                  allImages.push({
+                    path: imagePath,
+                    isOverview: false,
+                  });
+                });
+              }
+            } catch (e) {
+              // If images is not JSON, treat as comma-separated string
+              if (typeof project.images === "string" && project.images.trim()) {
+                const imageArray = project.images
+                  .split(",")
+                  .filter((img) => img.trim());
+                imageArray.forEach((imagePath) => {
+                  allImages.push({
+                    path: imagePath.trim(),
+                    isOverview: false,
+                  });
+                });
+              }
+            }
+          }
+
+          return {
+            ...project,
+            allImages,
+          };
+        });
+
+        setProjects(processedProjects);
+
+        // Initialize image indices
+        const initialIndices = {};
+        processedProjects.forEach((project) => {
+          if (project.allImages && project.allImages.length > 0) {
+            initialIndices[project.id] = 0;
+          }
+        });
+        setCurrentImageIndex(initialIndices);
       } else {
         setError("Failed to fetch projects");
       }
@@ -26,6 +107,39 @@ const Projects = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePrevImage = (projectId) => {
+    setCurrentImageIndex((prev) => {
+      const project = projects.find((p) => p.id === projectId);
+      if (!project || !project.allImages || project.allImages.length <= 1)
+        return prev;
+
+      const currentIndex = prev[projectId] || 0;
+      const newIndex =
+        currentIndex === 0 ? project.allImages.length - 1 : currentIndex - 1;
+
+      return {
+        ...prev,
+        [projectId]: newIndex,
+      };
+    });
+  };
+
+  const handleNextImage = (projectId) => {
+    setCurrentImageIndex((prev) => {
+      const project = projects.find((p) => p.id === projectId);
+      if (!project || !project.allImages || project.allImages.length <= 1)
+        return prev;
+
+      const currentIndex = prev[projectId] || 0;
+      const newIndex = (currentIndex + 1) % project.allImages.length;
+
+      return {
+        ...prev,
+        [projectId]: newIndex,
+      };
+    });
   };
 
   if (loading) {
@@ -84,16 +198,117 @@ const Projects = () => {
                 </div>
               )}
 
-              <div className="relative overflow-hidden">
-                <img
-                  src={
-                    project.overview_image
-                      ? `http://localhost:5000/uploads/${project.overview_image}`
-                      : "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  }
-                  alt={project.title}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
+              <div
+                className="relative overflow-hidden group/image"
+                onMouseEnter={() =>
+                  setPauseAutoSlide((prev) => ({ ...prev, [project.id]: true }))
+                }
+                onMouseLeave={() =>
+                  setPauseAutoSlide((prev) => ({
+                    ...prev,
+                    [project.id]: false,
+                  }))
+                }
+              >
+                {project.allImages && project.allImages.length > 0 ? (
+                  <>
+                    <img
+                      src={`http://localhost:5000/uploads/${
+                        project.allImages[currentImageIndex[project.id] || 0]
+                          ?.path
+                      }`}
+                      alt={project.title}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+
+                    {/* Navigation arrows */}
+                    {project.allImages.length > 1 && (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePrevImage(project.id);
+                          }}
+                          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 hover:bg-black/70"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 19l-7-7 7-7"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleNextImage(project.id);
+                          }}
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 hover:bg-black/70"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </button>
+                      </>
+                    )}
+
+                    {/* Image indicators */}
+                    {project.allImages.length > 1 && (
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                        {project.allImages.map((_, imageIndex) => (
+                          <button
+                            key={imageIndex}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentImageIndex((prev) => ({
+                                ...prev,
+                                [project.id]: imageIndex,
+                              }));
+                            }}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                              imageIndex ===
+                              (currentImageIndex[project.id] || 0)
+                                ? "bg-white"
+                                : "bg-white/50"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Image counter */}
+                    {project.allImages.length > 1 && (
+                      <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">
+                        {(currentImageIndex[project.id] || 0) + 1}/
+                        {project.allImages.length}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <img
+                    src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt={project.title}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                )}
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-6">
                   <div className="flex space-x-3">
                     {project.live_link && (
