@@ -1,3 +1,5 @@
+import profileImage from "../assets/profile.jpg";
+
 const About = () => {
   return (
     <section id="about" className="section-padding bg-gray-50">
@@ -28,9 +30,9 @@ const About = () => {
                 <div className="relative overflow-hidden rounded-2xl">
                   {/* Profile Image */}
                   <img
-                    src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Alex - Full Stack Developer"
-                    className="w-full h-80 sm:h-96 object-cover object-center"
+                    src={profileImage}
+                    alt="Akbar Profile"
+                    className="w-full object-cover object-center"
                   />
 
                   {/* Overlay gradient */}
