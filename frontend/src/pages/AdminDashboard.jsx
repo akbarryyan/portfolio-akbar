@@ -26,6 +26,7 @@ const AdminDashboard = () => {
     id: null,
     title: "",
     description: "",
+    job_desk: "",
     overview_image: null,
     github_link: "",
     live_link: "",
@@ -180,6 +181,7 @@ const AdminDashboard = () => {
       id: null,
       title: "",
       description: "",
+      job_desk: "",
       overview_image: null,
       github_link: "",
       live_link: "",
@@ -193,6 +195,7 @@ const AdminDashboard = () => {
       id: project.id,
       title: project.title,
       description: project.description,
+      job_desk: project.job_desk || "",
       overview_image: null,
       github_link: project.github_link,
       live_link: project.live_link,
@@ -210,12 +213,23 @@ const AdminDashboard = () => {
     const formData = new FormData();
     formData.append("title", projectForm.title);
     formData.append("description", projectForm.description);
+    formData.append("job_desk", projectForm.job_desk);
     formData.append("github_link", projectForm.github_link);
     formData.append("live_link", projectForm.live_link);
     formData.append("featured", projectForm.featured);
     if (projectForm.overview_image) {
       formData.append("overview_image", projectForm.overview_image);
     }
+
+    // Debug log
+    console.log("Submitting project form:", {
+      title: projectForm.title,
+      description: projectForm.description,
+      job_desk: projectForm.job_desk,
+      github_link: projectForm.github_link,
+      live_link: projectForm.live_link,
+      featured: projectForm.featured,
+    });
 
     const url = projectForm.id
       ? `http://localhost:5000/api/projects/${projectForm.id}`
@@ -644,6 +658,7 @@ const AdminDashboard = () => {
                     <th className="py-3 px-6">#</th>
                     <th className="py-3 px-6">Image</th>
                     <th className="py-3 px-6">Title</th>
+                    <th className="py-3 px-6">Job Desk</th>
                     <th className="py-3 px-6">Description</th>
                     <th className="py-3 px-6">Github</th>
                     <th className="py-3 px-6">Live</th>
@@ -667,6 +682,11 @@ const AdminDashboard = () => {
                         )}
                       </td>
                       <td className="py-2 px-6">{p.title}</td>
+                      <td className="py-2 px-6">
+                        <span className="px-2 py-1 bg-gradient-to-r from-purple-50 to-blue-50 text-purple-700 text-xs rounded-full font-medium">
+                          {p.job_desk || "Not Set"}
+                        </span>
+                      </td>
                       <td className="py-2 px-6">{p.description}</td>
                       <td className="py-2 px-6">{p.github_link}</td>
                       <td className="py-2 px-6">{p.live_link}</td>
@@ -1064,6 +1084,15 @@ const AdminDashboard = () => {
                       ...projectForm,
                       description: e.target.value,
                     })
+                  }
+                  className="w-full border p-2 rounded"
+                />
+                <input
+                  type="text"
+                  placeholder="Job Desk (e.g. Full Stack Developer, Backend Developer)"
+                  value={projectForm.job_desk}
+                  onChange={(e) =>
+                    setProjectForm({ ...projectForm, job_desk: e.target.value })
                   }
                   className="w-full border p-2 rounded"
                 />

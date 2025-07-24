@@ -40,6 +40,7 @@ export const createProject = async (projectData) => {
   const {
     title,
     description,
+    job_desk,
     github_link,
     live_link,
     featured,
@@ -48,9 +49,17 @@ export const createProject = async (projectData) => {
 
   const [result] = await pool.query(
     `INSERT INTO projects 
-     (title, description, github_link, live_link, featured, overview_image)
-     VALUES (?, ?, ?, ?, ?, ?)`,
-    [title, description, github_link, live_link, featured, overview_image]
+     (title, description, job_desk, github_link, live_link, featured, overview_image)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [
+      title,
+      description,
+      job_desk,
+      github_link,
+      live_link,
+      featured,
+      overview_image,
+    ]
   );
 
   return result.insertId;
@@ -68,6 +77,7 @@ export const updateProject = async (id, projectData) => {
   const {
     title,
     description,
+    job_desk,
     github_link,
     live_link,
     featured,
@@ -75,8 +85,15 @@ export const updateProject = async (id, projectData) => {
   } = projectData;
 
   let query =
-    "UPDATE projects SET title = ?, description = ?, github_link = ?, live_link = ?, featured = ?";
-  const params = [title, description, github_link, live_link, featured];
+    "UPDATE projects SET title = ?, description = ?, job_desk = ?, github_link = ?, live_link = ?, featured = ?";
+  const params = [
+    title,
+    description,
+    job_desk,
+    github_link,
+    live_link,
+    featured,
+  ];
 
   if (overview_image) {
     query += ", overview_image = ?";

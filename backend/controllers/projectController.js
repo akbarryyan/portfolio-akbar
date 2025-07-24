@@ -35,13 +35,24 @@ export const fetchProjectById = async (req, res) => {
 
 export const addProject = async (req, res) => {
   try {
-    const { title, description, github_link, live_link, featured } = req.body;
+    const { title, description, job_desk, github_link, live_link, featured } =
+      req.body;
+
+    console.log("Creating new project with data:", {
+      title,
+      description,
+      job_desk,
+      github_link,
+      live_link,
+      featured,
+    });
 
     const overviewImage = req.file ? req.file.filename : null;
 
     const projectId = await createProject({
       title,
       description,
+      job_desk,
       github_link,
       live_link,
       featured: featured ? 1 : 0,
@@ -85,11 +96,24 @@ export const uploadProjectImages = async (req, res) => {
 export const editProject = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, github_link, live_link, featured } = req.body;
+    const { title, description, job_desk, github_link, live_link, featured } =
+      req.body;
+
+    // Debug log
+    console.log("Received data for project update:", {
+      id,
+      title,
+      description,
+      job_desk,
+      github_link,
+      live_link,
+      featured,
+    });
 
     const projectData = {
       title,
       description,
+      job_desk,
       github_link,
       live_link,
       featured: featured ? 1 : 0,
