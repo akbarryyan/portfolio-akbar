@@ -387,15 +387,17 @@ const Projects = () => {
               </div>
 
               <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {project.title}
-                  </h3>
+                <div className="mb-3">
                   {project.job_desk && (
                     <span className="px-3 py-1 bg-gradient-to-r from-orange-50 to-red-50 text-orange-700 text-xs rounded-full font-medium">
                       {project.job_desk}
                     </span>
                   )}
+                </div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {project.title}
+                  </h3>
                 </div>
                 <p className="text-gray-600 mb-4 text-sm leading-relaxed">
                   {project.description}
